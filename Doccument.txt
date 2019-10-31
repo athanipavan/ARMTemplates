@@ -1,0 +1,94 @@
+Azure app Service Environment deployments : https://github.com/Azure/azure-quickstart-templates/tree/master/201-web-app-asev2-create/
+
+Azure event grid : https://github.com/Azure/azure-quickstart-templates/tree/master/101-event-grid
+
+Redis cache : https://github.com/Azure/azure-quickstart-templates/blob/master/201-redis-premium-vnet/azuredeploy.json
+
+Data Bricks : https://github.com/Azure/azure-quickstart-templates/blob/master/101-databricks-workspace-with-vnet-injection/azuredeploy.json
+
+Datalake :
+
+{
+  "name": "datalakestoretest",
+  "type": "Microsoft.DataLakeStore/accounts",
+  "location": "[resourceGroup().location]",
+  "apiVersion": "2016-11-01",
+  "properties": {
+  "firewallState": "Enabled",
+    "virtualNetworkRules": [
+      {
+        "properties": {
+         "subnetId": "[variables('subnetId')]"
+        },
+        "name": "vnetrulename"
+      }
+    ]
+  },
+  "dependsOn": [
+    "[ concat('Microsoft.Network/virtualNetworks/', parameters('vnetName'))]"
+  ]
+}
+
+
+DataFactory : there Source and destination is needed 
+
+
+Azure Resource group : 
+https://github.com/sam-cogan/Demos/blob/master/ResourceGroups/template.json
+
+just logical grouping
+
+Azure Storage account : 
+https://github.com/Azure/azure-quickstart-templates/tree/master/101-storage-account-create [outside vnet]
+
+https://github.com/Azure/azure-quickstart-templates/blob/master/201-vnet-2subnets-service-endpoints-storage-integration/azuredeploy.json
+
+not sure on if this is what is needed
+
+API Management :
+Create with vnet: https://github.com/Azure/azure-quickstart-templates/tree/master/201-api-management-create-with-external-vnet
+
+Create all sub resouces : https://github.com/Azure/azure-quickstart-templates/tree/master/201-api-management-create-all-resources
+
+APIM has lot of configurations so added both Links 
+
+KeyVault:
+
+Doc link : https://docs.microsoft.com/en-us/azure/templates/microsoft.keyvault/2018-02-14/vaults
+
+it is possible to enable VNet on Key vault but dint find readymade template for the same. Above link gives all options available to deploy. 
+
+ASB: 
+https://github.com/Azure/azure-quickstart-templates/tree/master/301-servicebus-namespace-vnet
+
+Properties like : topics/subscriptions/queues, TTL, retention, retry, encryption of message should be identified
+
+
+Integration Account : not possible for VNet
+
+"resources": [
+    {
+      "properties": {},
+      "sku": {
+        "name": "[parameters('iaConfig').tier]"
+      },
+      "tags": {
+        "displayName": "Farmlands Integration Account"
+      },
+      "name": "[parameters('iaName')]",
+      "type": "Microsoft.Logic/integrationAccounts",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2016-06-01"
+    }
+  ],
+
+
+Azure Functions:
+https://github.com/Azure/azure-quickstart-templates/tree/master/101-functions-managed-identity
+
+This will deploy functions with MSI:
+
+Properties Like : authentication, logging, region, timezone etc to be Identified
+
+Azure Search :
+https://github.com/Azure/azure-quickstart-templates/tree/master/101-azure-search-create
